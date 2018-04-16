@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: no
+  tasks:
+  - name: "create file"
+    command: "touch/home/ubuntu/test.txt"
+  - name: "store contents"
+    command: echo "Hello >> /home/ubuntu/test.txt"
+  - name: "Display content"
+    command: cat /home/ubuntu/test.txt
+    register: file_content
+  - debug: 
+    msg: "{{file_content}}"

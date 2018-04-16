@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: install webserber
+    package: 
+      name: "{{package_name}}"
+      state: present
+  - name: update package
+    apt: 
+      update_cache: yes
+    when: ansible_os_family == "Debian"
+  - name: "test task for {{ansible_os_family}}"
+    when: ansible_os_family == "RedHat"
+  - name: "install utilities"
+    package:
+      name: "{{item}}"
+      state: present
+    with_items:
+      - git
+      - tree
+      - nano
+
+#ansible-playbook -i "inventory/hosts" webserver.yaml      
